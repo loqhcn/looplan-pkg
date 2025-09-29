@@ -1,0 +1,36 @@
+{
+    "extends": "./tsconfig.app.json",
+    "references": [
+        {
+            "path": "./tsconfig.vitest.json"
+        }
+    ],
+    "compilerOptions": {
+        "noEmit": false, /* 修改继承的noEmit, 它会禁止生成输出文件 */
+        "paths": {
+            "@/*": [
+                "./src/*"
+            ],
+            "@packages/*": [
+                "./packages/*"
+            ]
+        }, /* 指定一组条目，将导入重新映射到其他查找位置 */
+        "declaration": true, // 生成 .d.ts 文件
+        "emitDeclarationOnly": true, // 仅生成 .d.ts 文件
+        "declarationDir": "./types", // 指定输出目录
+        "strict": true, /* 启用所有严格的类型检查选项 */
+        "skipLibCheck": true
+    },
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.tsx",
+        "src/**/*.vue",
+        "src/**/*.d.ts",
+        "env.d.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "example",
+        "**/*.spec.ts"
+    ]
+}

@@ -1,0 +1,14 @@
+{
+  "version": "v1",
+  "packages": {
+    "looplan": {
+      "signature": "3e4b4c79dbcc3b078a85162a3d5648d3",
+      "file": true
+    },
+    "looplan-ui": {
+      "signature": "7fb0209a5d6ad550ee229eddfb569921",
+      "file": true,
+      "replaced": "^1.0.1"
+    }
+  }
+}

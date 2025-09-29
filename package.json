@@ -1,0 +1,59 @@
+{
+  "name": "looplan-pkg",
+  "private": false,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Looplan组件包开发库",
+  "scripts": {
+    
+    "dev": "vite",
+    "build": "vite build && tsc",
+    "build:types": "tsc --project tsconfig.build.json --emitDeclarationOnly",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:ui": "vitest --ui"
+  },
+  "dependencies": {
+    "axios": "^1.8.4",
+    "looplan": "file:.yalc/looplan",
+    "looplan-ui": "file:.yalc/looplan-ui",
+    "vue": "^3.5.18"
+  },
+  "devDependencies": {
+    "@tsconfig/node22": "^22.0.1",
+    "@types/jsdom": "^21.1.7",
+    "@types/lodash": "^4.17.16",
+    "@types/lodash-es": "^4.17.12",
+    "@types/node": "^22.14.0",
+    "@vitejs/plugin-vue": "^5.2.3",
+    "@vitejs/plugin-vue-jsx": "^4.1.2",
+    "@vue/test-utils": "^2.4.6",
+    "@vue/tsconfig": "^0.7.0",
+    "cross-env": "^7.0.3",
+    "fs-extra": "^11.3.2",
+    "jsdom": "^26.1.0",
+    "lodash-es": "^4.17.21",
+    "sass": "^1.58.3",
+    "typescript": "^5.8.2",
+    "vite": "^6.2.3",
+    "vite-plugin-dts": "^4.5.4",
+    "vitest": "^3.1.1",
+    "vue-router": "^4.5.1",
+    "vue-tsc": "^2.2.8"
+  },
+  "files": [
+    "lib",
+    "types",
+    "README.md",
+    "LICENSE"
+  ],
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/loqhcn/looplan.git"
+  },
+  "main": "lib/mulo-open.umd.js",
+  "module": "lib/looplan.es.js",
+  "types": "types/index.d.ts"
+}

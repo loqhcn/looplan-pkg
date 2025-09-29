@@ -1,0 +1,23 @@
+{
+    "extends": "./tsconfig.app.json",
+    "include": [
+        "env.d.ts",
+        "example/**/*.ts", // 包含所有 example 目录下的文件
+        "example/**/*.vue", // 包含所有 src 目录下的文件
+        "example/**/*", // 包含所有 src 目录下的文件
+        "src/**/*.d.ts", // 包含所有 src 目录下的文件
+    ],
+    "compilerOptions": {
+        "paths": {
+            "@/*": [
+                "./src/*"
+            ],
+            "@example/*": [
+                "./example/*"
+            ],
+            "@packages/*": [
+                "./packages/*"
+            ]
+        }
+    }
+}
