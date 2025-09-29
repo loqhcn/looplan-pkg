@@ -1,18 +1,31 @@
 {
   "name": "looplan-pkg",
   "private": false,
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
-  "description": "Looplan组件包开发库",
+  "description": "现代化的 Vue 3 + TypeScript 组件库开发模板，支持多包管理和智能构建系统",
+  "keywords": [
+    "vue3",
+    "typescript",
+    "component-library",
+    "vite",
+    "monorepo",
+    "ui-components",
+    "bun"
+  ],
   "scripts": {
-    
     "dev": "vite",
-    "build": "vite build && tsc",
+    "build": "bun run ./scripts/build.ts",
+    "build:pkg": "bun run ./scripts/build.ts --pkg",
+    "build:single": "bun run ./scripts/build.ts --pkg",
+    "build:old": "vite build && tsc",
     "build:types": "tsc --project tsconfig.build.json --emitDeclarationOnly",
     "preview": "vite preview",
     "test": "vitest",
     "test:run": "vitest run",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "test:parse": "bun run ./test/test.ts",
+    "test:build": "bun run ./test/test-one.ts"
   },
   "dependencies": {
     "axios": "^1.8.4",
