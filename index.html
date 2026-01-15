@@ -1,14 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + Vue</title>
-    <!-- <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css"> -->
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/example/main.ts"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite + Vue</title>
+  <!-- <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css"> -->
+  <script>
+    /**
+     * @var {string} docBaseUrl;
+     * @todo 设置文档的根路径
+     *
+     * @example 相对路径: /docs
+     * @example 绝对路径: http://xxx.cn/docs
+     */
+    var docBaseUrl = "/docs";
+    // TODO set-docBaseUrl
+
+    window.docConfig = {
+      // 是否开启多文档模式
+      multiDoc: true,
+      // 默认文档
+      defaultDoc: "LpDoc",
+      // 多文档模式下的网关地址
+      gatewayApi: "http://api.looplan.cn/DocGateway.gateway",
+    };
+  </script>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script type="module" src="/example/main.ts"></script>
+</body>
+
 </html>

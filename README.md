@@ -4,8 +4,9 @@
 
 [![Vue 3](https://img.shields.io/badge/Vue-3.x-4FC08D.svg)](https://vuejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6.svg)](https://www.typescriptlang.org/)
-[![Vite](https://img.shields.io/badge/Vite-5.x-646CFF.svg)](https://vitejs.dev/)
-[![Bun](https://img.shields.io/badge/Bun-1.x-F472B6.svg)](https://bun.sh/)
+[![Vite](https://img.shields.io/badge/Vite-7.x-646CFF.svg)](https://vitejs.dev/)
+[![Bun](https://img.shields.io/badge/Bun-1.3-F472B6.svg)](https://bun.sh/)
+
 
 
 ## 🚀 快速开始
@@ -44,6 +45,17 @@ bun run dev
 # 🔍 解析日志调试
 bun run debug:parse
 ```
+
+
+
+# 如何开发组件
+
+
+- 在`组件包目录/src/component/`新建组件文件
+- 在`组件包目录/src/index.ts`导出新建的组件
+- 在`/public/docs/组件包名/组件名.md`编写`组件文档`, [文档规范](http://doc.looplan.cn/LpDoc)
+- 在`/public/docs/组件包名/README.md`里面添加`组件文档`的链接
+
 
 ## 📊 构建输出
 

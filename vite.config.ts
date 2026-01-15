@@ -1,16 +1,18 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
+import vueJsx from '@vitejs/plugin-vue-jsx';
 // const { resolve } = require('path');
 import { resolve } from 'path';
 
 export default defineConfig({
-	plugins: [vue()],
+	plugins: [vue(), vueJsx()],
 	server: {
 		host: '0.0.0.0',
 		port: 7011
 	},
 	resolve: {
 		alias: {
+			'vue': 'vue/dist/vue.esm-bundler.js',
 			'@': resolve(__dirname, './src'),
 			// 'looplan-ui':resolve(__dirname,'D:\\work\\vue3-component\\looplan-ui\\src'),
 			'@example':resolve(__dirname,'./example'),
