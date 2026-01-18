@@ -1,7 +1,7 @@
-import LooplanExample from './components/looplan-example.vue'
+import Text from './components/Text.vue'
 
 export type { TextProps, TextEmits } from './types'
 
 export {
-	LooplanExample
+	Text
 }

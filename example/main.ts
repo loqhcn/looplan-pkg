@@ -1,10 +1,13 @@
-import { createApp } from 'vue'
+import { createApp,provide } from 'vue'
 import * as Vue from 'vue';
+import * as Looplan from 'looplan';
+import { setupDocRouter, setupStore, $store, useLocalDoc } from 'looplan-doc';
+import LooplanDoc from 'looplan-doc';
 
 import './style.css'
 import App from './App.vue'
 
-// import { setupRouter } from '@example/router';
+import { setupRouter } from '@example/router';
 import looplanUi from 'looplan-ui';
 import 'looplan-ui/lib/index.css'; // 引入全局样式
 import 'looplan-ui/lib/looplan-ui.css';
@@ -12,12 +15,6 @@ import 'looplan-doc/lib/looplan-doc.css';
 
 // import currentLib from '@/index';
 
-// TODO looplan
-import * as Looplan from 'looplan';
-
-// TODO looplan-doc
-import { setupRouter, setupStore, $store, useLocalDoc } from 'looplan-doc';
-import LooplanDoc from 'looplan-doc';
 
 import {
     packages,
@@ -37,6 +34,7 @@ declare global {
             defaultDoc?: string;
         };
         docBaseUrl: string;
+        $router: any;
     }
 }
 
@@ -60,6 +58,8 @@ async function bootstrap() {
     });
 
     // TODO 配置组件到Looplan
+    const packageConfigs = packages.map(pkg => pkg.packageConfig);
+    provide('packageConfigs', packageConfigs);
     packages.forEach(pkg => {
         console.log(`setpkg`, pkg.packageConfig, pkg.module);
         Looplan.setPkg(pkg.packageConfig, pkg.module);
@@ -82,7 +82,7 @@ async function bootstrap() {
             appName = parts[0];
         } else if (docConfig.defaultDoc) {
             // Redirect to default doc if at root
-            location.replace(`/${docConfig.defaultDoc}`);
+            location.replace(`/pkg`);
             return;
         }
     }
@@ -94,12 +94,14 @@ async function bootstrap() {
     }
 
     // TODO 载入路由
-    await setupRouter(app).isReady();
+    const router =  setupRouter(app)
+    await router.isReady();
+    console.log('router',router.getRoutes());
 
-    app.mount('#app');
     window.Vue = Vue;
     window.Looplan = Looplan;
 
+    app.mount('#app');
 
     // TODO 载入文档布局
     if ($store('app').docBaseUrl) {
@@ -107,6 +109,7 @@ async function bootstrap() {
     }
 
     window.$store = $store;
+    window.$router = router;
 
 }
 

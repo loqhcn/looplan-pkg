@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { setupDocRouter, setupStore, $store, useLocalDoc } from 'looplan-doc';
 import mergeAppRoute from './mergeAppRoute';
 import { pages } from './mergeAppRoute';
 const HomeView = () => import('./../views/home.vue');
@@ -10,11 +11,12 @@ const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         { path: '/', component: HomeView },
+        { path: '/pkg', component: HomeView },
     ], // `routes: routes` 的缩写
 });
 
 function setupRouter(app: any) {
-
+    setupDocRouter(router);
     mergeAppRoute(router);
 
     app.use(router);

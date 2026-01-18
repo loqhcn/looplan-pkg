@@ -50,21 +50,46 @@ bun run debug:parse
 
 # 如何开发组件
 
-
+- 组件包根目录为`/packages`, 新建文件夹,文件夹路径为`组件包目录`
 - 在`组件包目录/src/component/`新建组件文件
 - 在`组件包目录/src/index.ts`导出新建的组件
 - 在`/public/docs/组件包名/组件名.md`编写`组件文档`, [文档规范](http://doc.looplan.cn/LpDoc)
 - 在`/public/docs/组件包名/README.md`里面添加`组件文档`的链接
 
 
+## 编写文档与调试
+
+- 项目使用`looplan-doc`进行文档渲染,使用`looplan`进行自动注册与加载
+- 在`/public/docs/组件包名/组件名.md`编写组件文档
+- 运行`npm run dev`后, 访问`http://192.168.31.101:7011/组件包名/文档名.md`
+
+
+## 文档example
+
+- 例如我开发一个`looplan-example`组件包
+- 访问`http://192.168.31.101:7011/looplan-example/test1.md`
+
+test1.md:
+```markdown
+[TOC]
+
+# 渲染效果
+- 可以直接使用组件标签访问文档
+<lp-component is="looplan-example@LooplanExample"></lp-component>
+
+
+
+
+```
+
 ## 📊 构建输出
 
 每个组件包构建后会生成：
 
 ```
-dist/
-├── index.js          # ES Module 格式
-├── index.umd.js      # UMD 格式 (浏览器兼容)
+dist/${组件包名称}
+├── ${组件包名称}.js          # ES Module 格式
+├── ${组件包名称}.umd.js      # UMD 格式 (浏览器兼容)
 ├── index.d.ts        # TypeScript 类型定义
 └── style.css         # 样式文件
 ```
