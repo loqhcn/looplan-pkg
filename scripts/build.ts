@@ -2,14 +2,14 @@ import { build } from 'vite'
 import { resolve, join } from 'path'
 import fs from 'fs'
 import { BuildParse, getPackages } from './BuildParse'
-import { generatePackageJson, handleTypeFiles, removeDir, ensureDir } from '../src/build/utils'
+import { generatePackageJson, removeDir, ensureDir } from '../src/build/utils'
 
 // 获取当前工作目录
 const projectRoot = process.cwd()
 
 // 构建单个组件
 async function buildComponent(pkgName: string): Promise<boolean> {
-    console.log(`\n🚀 Starting build for ${pkgName}...`)
+    console.log(`\n🚀  ${pkgName} 开始构建...`)
     
     try {
         // 使用 BuildParse 进行解析
@@ -17,7 +17,7 @@ async function buildComponent(pkgName: string): Promise<boolean> {
         const parseResult = await parser.parse()
         
         if (!parseResult.success) {
-            console.error(`❌ Failed to parse ${pkgName}:`, parseResult.logs.filter(log => log.level === 'error'))
+            console.error(`❌ 无法解析 ${pkgName}:`, parseResult.logs.filter(log => log.level === 'error'))
             return false
         }
         
@@ -36,7 +36,7 @@ async function buildComponent(pkgName: string): Promise<boolean> {
         }
         
         if (!parseResult.viteConfigObject) {
-            console.error(`❌ No valid Vite configuration for ${pkgName}`)
+            console.error(`❌ 无效的Vite配置 ${pkgName}`)
             return false
         }
         
@@ -54,12 +54,11 @@ async function buildComponent(pkgName: string): Promise<boolean> {
         
         // 处理类型文件和生成 package.json
         if (parseResult.useType) {
-            console.log(`📄 Processing TypeScript declarations for ${pkgName}...`)
-            await handleTypeFiles(pkgName, parseResult.pkgPath, distDir)
+          
         }
         
-        console.log(`📝 Generating package.json for ${pkgName}...`)
-        await generatePackageJson(pkgName, distDir)
+        console.log(`📝 生成 package.json ...`)
+        await generatePackageJson(pkgName, distDir,parseResult)
         
         console.log(`✅ ${pkgName} build completed!`)
         return true

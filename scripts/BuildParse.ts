@@ -10,15 +10,25 @@ interface ParseLog {
 }
 
 interface ParseResult {
+    /** 组件包名称 */
     pkgName: string
+    /** 组件包路径 */
     pkgPath: string
+    /** 入口文件 */
     entryFile: string | null
+    /** 是否使用TypeScript */
     useType: boolean // 是否使用TypeScript
+    /** Vite配置文件路径 */
     viteConfig: string | null
+    /** Vite配置对象 */
     viteConfigObject: UserConfig | null
+    /** package.json内容 */
     packageJson: any | null
+    /** 配置文件内容 */
     config: any | null
+    /** 解析日志 */
     logs: ParseLog[]
+    /** 是否解析成功 */
     success: boolean
 }
 
@@ -504,5 +514,6 @@ async function getPackages(): Promise<PackageItem[]> {
 
 export {
     getPackages,
-    BuildParse
+    BuildParse,
+    type ParseResult
 }
