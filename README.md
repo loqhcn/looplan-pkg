@@ -41,9 +41,6 @@ bun run .\scripts\build.ts --pkg=组件包名称
 ```bash
 # 📊 启动演示页面
 bun run dev
-
-# 🔍 解析日志调试
-bun run debug:parse
 ```
 
 

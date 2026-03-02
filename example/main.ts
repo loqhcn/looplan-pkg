@@ -43,11 +43,11 @@ async function bootstrap() {
     const app = createApp(App);
     app.use(Looplan);
     app.use(looplanUi);
-    app.use(LooplanDoc);
+    app.use(LooplanDoc as any);
 
     // app.use(currentLib);
     // TODO 载入store
-    setupStore(app);
+    setupStore(app as any);
 
     // TODO 设置网关
     Looplan.setGateway({
