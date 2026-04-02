@@ -1,13 +1,17 @@
 <template>
     <div class="full padding">
         <div>
-
             <!-- <demo1></demo1> -->
             home
             <div class="list">
-                <div class="item flex " v-for="pkg in packageConfigs" :key="pkg.name">
-                    {{ pkg.name }}
-                    <lp-button @click="onOpen(pkg)">打开</lp-button>
+                <div class="item  " v-for="pkg in packageConfigs" :key="pkg.name">
+                    <div class="item-title flex">
+                        {{ pkg.name }}
+                        <lp-button @click="onOpen(pkg)">打开</lp-button>
+                    </div>
+                    <!-- <div class="pkg-data">
+                        {{ pkg }}
+                    </div> -->
                 </div>
             </div>
         </div>
