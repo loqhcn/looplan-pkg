@@ -51,7 +51,7 @@ async function bootstrap() {
 
     // TODO 设置网关
     Looplan.setGateway({
-        url: 'http://api.looplan.cn/ComponentGateway.detail',
+        url: 'https://api.looplan.cn/ComponentGateway.detail',
         name: 'test',
         // 认证
         // token:''
