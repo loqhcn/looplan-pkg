@@ -131,8 +131,6 @@ class BuildParse {
         
         this.addLog('info', `解析完成，成功: ${success}`)
         
-        console.log('vite配置',JSON.stringify(viteConfigObject));
-
         return {
             pkgName: this.pkgName,
             pkgPath,
@@ -350,6 +348,11 @@ class BuildParse {
         })
         customFormats = uniqueFormats
         
+        const currentOutput = config.build?.rollupOptions?.output
+        const normalizedOutput = Array.isArray(currentOutput)
+            ? currentOutput.map((item) => this.withCssAssetFileName(item))
+            : this.withCssAssetFileName(currentOutput || {})
+
         const injectedConfig: UserConfig = {
             ...config,
             root: pkgPath, // 设置组件包为根目录
@@ -360,12 +363,18 @@ class BuildParse {
                     entry: actualEntry,
                     name: customName,
                     fileName: (format) => `${this.pkgName}.${format}.js`,
+                    // 确保每个组件包产出的 CSS 文件同名
+                    cssFileName: `${this.pkgName}`,
                     formats: customFormats as any
                 },
                 outDir: join(this.projectRoot, 'dist', this.pkgName),
                 emptyOutDir: true,
                 // 确保只有一个 CSS 文件输出
-                cssCodeSplit: false
+                cssCodeSplit: false,
+                rollupOptions: {
+                    ...config.build?.rollupOptions,
+                    output: normalizedOutput
+                }
             }
         }
         
@@ -376,6 +385,30 @@ class BuildParse {
         this.addLog('info', `设置输出格式: ${JSON.stringify(customFormats)}`)
         
         return injectedConfig
+    }
+
+    private withCssAssetFileName(output: any): any {
+        const currentAssetFileNames = output?.assetFileNames
+
+        return {
+            ...output,
+            assetFileNames: (assetInfo: any) => {
+                const assetName = typeof assetInfo?.name === 'string' ? assetInfo.name : ''
+                if (assetName.endsWith('.css')) {
+                    return `${this.pkgName}.css`
+                }
+
+                if (typeof currentAssetFileNames === 'function') {
+                    return currentAssetFileNames(assetInfo)
+                }
+
+                if (typeof currentAssetFileNames === 'string') {
+                    return currentAssetFileNames
+                }
+
+                return 'assets/[name][extname]'
+            }
+        }
     }
 
     private findEntryFile(pkgPath: string): { entry: string; useType: boolean } | null {

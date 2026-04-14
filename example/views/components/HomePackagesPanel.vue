@@ -20,6 +20,7 @@
                         placeholder="输入包名 / 标题 / 类型 / 版本进行过滤"
                     />
                     <lp-button @click="keyword = ''">清空</lp-button>
+                    <lp-button type="primary" @click="showCreateDialog = true">创建组件包</lp-button>
                 </div>
 
                 <div class="pkg-grid">
@@ -83,6 +84,14 @@
                 </div>
             </div>
         </div>
+
+        <create-pkg-dialog
+            :visible="showCreateDialog"
+            :server-base="API_BASE"
+            @close="showCreateDialog = false"
+            @created="onCreatedPkg"
+            @error="onCreateError"
+        ></create-pkg-dialog>
     </div>
 </template>
 <script setup lang="ts">
@@ -90,6 +99,8 @@ import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
 import { packages } from '@example/lib/parsePackages';
 import { useRouter } from 'vue-router';
 import { $store } from 'looplan-doc';
+import { LpLayer } from 'looplan-ui';
+import CreatePkgDialog from './CreatePkgDialog.vue';
 
 interface PackageConfig {
     name: string;
@@ -108,11 +119,12 @@ interface BuildLog {
     message: string;
 }
 
-const API_BASE = '/api';
+const API_BASE = 'http://127.0.0.1:5050';
 const DB_NAME = 'looplan-build-logs';
 const DB_VERSION = 1;
 const DB_STORE = 'logs';
 const LOG_LIMIT = 800;
+const WS_RECONNECT_DELAY = 2000;
 
 const packageConfigs = packages.map(pkg => pkg.packageConfig as PackageConfig);
 const router = useRouter();
@@ -121,8 +133,11 @@ const logs = ref<BuildLog[]>([]);
 const logListRef = ref<HTMLElement | null>(null);
 const streamConnected = ref(false);
 const buildingMap = ref<Record<string, boolean>>({});
+const showCreateDialog = ref(false);
 const logIds = new Set<string>();
-let eventSource: EventSource | null = null;
+let logSocket: WebSocket | null = null;
+let reconnectTimer: number | null = null;
+let manualClose = false;
 
 const filteredPackages = computed(() => {
     if (!keyword.value) return packageConfigs;
@@ -220,6 +235,11 @@ const clearLogs = async () => {
     } catch {
         // 忽略清理失败
     }
+    try {
+        await fetch(`${API_BASE}/Build.clearLogs`, { method: 'POST' });
+    } catch {
+        // 忽略服务端清理失败
+    }
 };
 
 const scrollLogsToBottom = async () => {
@@ -258,7 +278,7 @@ const appendLocalSystemLog = (message: string, level: BuildLog['level'] = 'syste
 
 const syncLogsFromApi = async () => {
     try {
-        const res = await fetch(`${API_BASE}/logs`);
+        const res = await fetch(`${API_BASE}/Build.logs`);
         if (!res.ok) return;
         const data = (await res.json()) as { logs?: BuildLog[] };
         const serverLogs = data.logs || [];
@@ -270,25 +290,50 @@ const syncLogsFromApi = async () => {
     }
 };
 
-const connectLogStream = () => {
-    if (eventSource) eventSource.close();
-    eventSource = new EventSource(`${API_BASE}/logs/stream`);
+const buildWsUrl = () => {
+    const wsBase = API_BASE.replace(/^http/i, 'ws');
+    return `${wsBase}/ws/build-logs`;
+};
 
-    eventSource.onopen = () => {
+const scheduleWsReconnect = () => {
+    if (manualClose || reconnectTimer !== null) return;
+    reconnectTimer = window.setTimeout(() => {
+        reconnectTimer = null;
+        connectLogStream();
+    }, WS_RECONNECT_DELAY);
+};
+
+const connectLogStream = () => {
+    if (logSocket) {
+        logSocket.close();
+        logSocket = null;
+    }
+    manualClose = false;
+    logSocket = new WebSocket(buildWsUrl());
+
+    logSocket.onopen = () => {
         streamConnected.value = true;
     };
 
-    eventSource.onmessage = (event) => {
+    logSocket.onmessage = (event) => {
         try {
-            const entry = JSON.parse(event.data) as BuildLog;
+            const entry = JSON.parse(String(event.data || '{}')) as BuildLog;
             appendLog(entry, true);
         } catch {
             // 忽略异常消息
         }
     };
 
-    eventSource.onerror = () => {
+    logSocket.onerror = () => {
         streamConnected.value = false;
+        scheduleWsReconnect();
+    };
+
+    logSocket.onclose = () => {
+        streamConnected.value = false;
+        if (!manualClose) {
+            scheduleWsReconnect();
+        }
     };
 };
 
@@ -297,7 +342,7 @@ const onBuild = async (row: PackageConfig) => {
 
     setBuildState(row.name, true);
     try {
-        const res = await fetch(`${API_BASE}/build`, {
+        const res = await fetch(`${API_BASE}/Build.build`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -317,6 +362,16 @@ const onBuild = async (row: PackageConfig) => {
     }
 };
 
+const onCreatedPkg = (payload: { pkgName: string; message: string }) => {
+    appendLocalSystemLog(payload.message || `创建成功: ${payload.pkgName}`, 'system');
+    LpLayer.toast(`创建成功: ${payload.pkgName}`);
+};
+
+const onCreateError = (message: string) => {
+    appendLocalSystemLog(message, 'error');
+    LpLayer.toast(message || '创建失败');
+};
+
 onMounted(() => {
     void loadLogsFromDB().then(() => {
         void syncLogsFromApi();
@@ -325,7 +380,12 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-    if (eventSource) eventSource.close();
+    manualClose = true;
+    if (reconnectTimer !== null) {
+        clearTimeout(reconnectTimer);
+        reconnectTimer = null;
+    }
+    if (logSocket) logSocket.close();
 });
 </script>
 <style lang="scss" scoped>
