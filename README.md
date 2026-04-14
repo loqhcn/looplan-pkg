@@ -39,8 +39,8 @@ bun run .\scripts\build.ts --pkg=组件包名称
 ### 开发模式
 
 ```bash
-# 📊 启动演示页面
-bun run dev
+# 📊 启动演示页面 + 构建服务（同时启动）
+npm run dev
 ```
 
 

@@ -14,7 +14,7 @@
     "bun"
   ],
   "scripts": {
-    "dev": "vite",
+    "dev": "concurrently -n web,server -c blue,magenta \"vite\" \"bun run --watch src/server/index.ts\"",
     "build": "bun run ./scripts/build.ts",
     "build:pkg": "bun run ./scripts/build.ts --pkg",
     "build:single": "bun run ./scripts/build.ts --pkg",
@@ -44,6 +44,7 @@
     "@vitejs/plugin-vue-jsx": "^4.1.2",
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.7.0",
+    "concurrently": "^9.2.1",
     "cross-env": "^7.0.3",
     "fs-extra": "^11.3.2",
     "jsdom": "^26.1.0",

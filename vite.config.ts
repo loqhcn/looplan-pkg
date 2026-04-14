@@ -8,7 +8,13 @@ export default defineConfig({
 	plugins: [vue(), vueJsx()],
 	server: {
 		host: '0.0.0.0',
-		port: 7011
+		port: 7011,
+		proxy: {
+			'/api': {
+				target: 'http://127.0.0.1:5050',
+				changeOrigin: true,
+			},
+		},
 	},
 	resolve: {
 		alias: {
