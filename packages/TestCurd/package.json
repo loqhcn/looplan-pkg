@@ -1,7 +1,7 @@
 {
   "_generatedBy": "looplan CreatePkg",
 
-  "name": "xxx",
-  "title": "xxx",
+  "name": "TestCurd",
+  "title": "测试增删改查",
   "version": "0.0.1"
 }

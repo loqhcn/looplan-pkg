@@ -3,6 +3,9 @@ import * as Vue from 'vue';
 import * as Looplan from 'looplan';
 import { setupDocRouter, setupStore, $store, useLocalDoc } from 'looplan-doc';
 import LooplanDoc from 'looplan-doc';
+import { setupModelSpace } from './config/api';
+
+
 
 import './style.css'
 import App from './App.vue'
@@ -102,6 +105,9 @@ async function bootstrap() {
     window.Looplan = Looplan;
 
     app.mount('#app');
+
+    // TODO 配置模型空间
+    setupModelSpace();
 
     // TODO 载入文档布局
     if ($store('app').docBaseUrl) {

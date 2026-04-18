@@ -18,6 +18,8 @@
                 <home-packages-panel></home-packages-panel>
             </div>
 
+            <home-console-panel v-else-if="activeMenu === 'console'"></home-console-panel>
+
             <div v-else class="doc-panel">
                 <div class="doc-head">
                     <div class="doc-title">开发文档</div>
@@ -39,11 +41,13 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import HomePackagesPanel from './components/HomePackagesPanel.vue';
+import HomeConsolePanel from './components/HomeConsolePanel.vue';
 
 const activeMenu = ref('packages');
 
 const menuData = [
     { id: 'packages', title: '组件包' },
+    { id: 'console', title: '控制台' },
     { id: 'docs', title: '开发文档' },
 ];
 
@@ -143,5 +147,6 @@ export default {
     .doc-frame-wrap {
         min-height: 520px;
     }
+
 }
 </style>

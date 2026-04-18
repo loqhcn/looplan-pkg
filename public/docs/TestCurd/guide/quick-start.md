@@ -3,12 +3,12 @@
 
 ## 安装
 ```bash
-npm i xxx
+npm i TestCurd
 ```
 
 ## 基础使用
 ```ts
-import { Xxx } from 'xxx'
+import { TestCurd } from 'TestCurd'
 ```
 
 > 本文档由创建组件包流程自动生成，可按实际组件能力补充示例。
