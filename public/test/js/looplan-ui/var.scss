@@ -1,0 +1,193 @@
+
+@use "sass:math";
+@use "sass:map";
+
+// TODO 场景颜色
+$color-primary: var(--lp-color-primary);
+$color-success: var(--lp-color-success);
+$color-info: var(--lp-color-info);
+$color-warning: var(--lp-color-warning);
+$color-danger: var(--lp-color-danger);
+$color-disabled: var(--lp-color-disabled);
+
+// TODO 场景颜色-高亮
+$color-primary-lignt: var(--lp-color-primary-lignt);
+$color-success-lignt: var(--lp-color-success-lignt);
+$color-info-lignt: var(--lp-color-info-lignt);
+$color-warning-lignt: var(--lp-color-warning-lignt);
+$color-danger-lignt: var(--lp-color-danger-lignt);
+
+// TODO padding|margin
+$padding: var(--lp-space);
+$padding-max: var(--lp-space-max);
+$padding-mini: var(--lp-space-mini);
+
+$margin: var(--lp-space);
+$margin-max: var(--lp-space-max);
+$margin-mini: var(--lp-space-mini);
+
+// TODO 间距
+$space: var(--lp-space);
+$space-max: var(--lp-space-max);
+$space-mini: var(--lp-space-mini);
+
+
+// TODO 圆角
+$radius: var(--lp-radius); // 默认圆角大小
+$radius-max: var(--lp-radius-max); // 大圆角
+$radius-mini: var(--lp-radius-mini); // 小圆角
+$radius-round: 1000px !default; // 半圆
+
+// TODO 字体
+$font-weight-lighter: lighter !default;
+$font-weight-light: 300 !default;
+$font-weight-normal: 400 !default;
+$font-weight-bold: bold !default;
+$font-weight-bolder: 900 !default;
+
+$font-size: var(--lp-font-size);
+$font-size-max: var(--lp-font-size-max);
+$font-size-mini: var(--lp-font-size-mini);
+
+
+// TODO 段落
+$line-height: var(--lp-line-height);
+$line-height-max: var(--lp-line-height-max);
+$line-height-mini: var(--lp-line-height-mini);
+
+// TODO 图标
+$icon-size: var(--lp-icon-size);
+$icon-size-max: var(--lp-icon-size-max);
+$icon-size-mini: var(--lp-icon-size-mini);
+
+
+
+// SECTION 颜色 $colors $grays $darks
+
+
+// TODO 颜色名变量
+$yellow: #ffc300; //ss-黄
+$orange: #ff6000; //ss-橘
+$red: #ff3000; //ss-红
+$pink: #e03997;
+$mauve: #b745cb;
+$purple: #652abf; //rgba(101, 42, 191, 1); // ss-紫
+$blue: #0081ff;
+$cyan: #37c0fe;
+$green: #2aae67; //ss-绿
+$olive: #8dc63f;
+$grey: #8799a3;
+$brown: #a5673f;
+$black: #484848; //ss-黑
+$golden: #e9b461; //ss-金
+$white: #ffffff;
+
+// TODO 颜色变量数组
+$colors_scene: (
+  'primary': $color-primary,
+  'success': $color-success,
+  'info': $color-info,
+  'warning': $color-warning,
+  'danger': $color-danger,
+);
+
+
+$colors: map.merge(
+  (
+    'yellow': $yellow,
+    'orange': $orange,
+    'red': $red,
+    'pink': $pink,
+    'mauve': $mauve,
+    'purple': $purple,
+    'violet': $purple,
+    'blue': $blue,
+    'cyan': $cyan,
+    'green': $green,
+    'olive': $olive,
+    'grey': $grey,
+    'brown': $brown,
+    'black': $black,
+    'golden': $golden,
+    'white': $white,
+  ),
+  $colors_scene
+);
+
+//TODO 灰度
+$bg-page: #f6f6f6;
+$white: #ffffff;
+$gray-f: #f8f9fa;
+$gray-e: #eeeeee;
+$gray-d: #dddddd;
+$gray-c: #cccccc;
+$gray-b: #bbbbbb;
+$gray-a: #aaaaaa;
+$dark-9: #999999;
+$dark-8: #888888;
+$dark-7: #777777;
+$dark-6: #666666;
+$dark-5: #555555;
+$dark-4: #484848; //ss-黑
+$dark-3: #333333;
+$dark-2: #222222;
+$dark-1: #111111;
+$black: #000000;
+
+$grays: ();
+$grays: map.merge(
+  (
+    'white': $white,
+    'gray-f': $gray-f,
+    'gray-e': $gray-e,
+    'gray-d': $gray-d,
+    'gray-c': $gray-c,
+    'gray-b': $gray-b,
+    'gray-a': $gray-a,
+    'gray': $gray-a,
+  ),
+  $grays
+);
+
+$darks: ();
+$darks: map.merge(
+  (
+    'dark-9': $dark-9,
+    'dark-8': $dark-8,
+    'dark-7': $dark-7,
+    'dark-6': $dark-6,
+    'dark-5': $dark-5,
+    'dark-4': $dark-4,
+    'dark-3': $dark-3,
+    'dark-2': $dark-2,
+    'dark-1': $dark-1,
+    'black': $black,
+  ),
+  $darks
+);
+
+// !SECTION
+
+
+
+// TODO 边框
+$border-size: var(--lp-border-size); // 边框大小
+$border-size-max: var(--lp-border-size-max); // 边框大小
+$border-size-mini: var(--lp-border-size-mini); // 边框大小
+$border-color: $gray-d; // 边框颜色
+$border-color-hover: $gray-b; // 边框颜色
+$border: var(--lp-border); // 边框
+
+// TODO 过渡
+$transition-base: all 0.2s ease-in-out;
+$transition-base-out: all 0.04s ease-in-out;
+$transition-fade: opacity 0.15s linear;
+$transition-collapse: height 0.35s ease;
+
+// TODO -- 组件相关
+
+$form-item-height: var(--lp-form-item-height);
+$dialog-header-height: var(--lp-dialog-header-height);
+
+// 阴影
+$shadow: var(--lp-shadow);

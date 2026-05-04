@@ -3,14 +3,14 @@
     <RouterView></RouterView>
     <div class="lp-pkg-dev-box">
       <div class="item" @click="onHome">
-        <lp-icon is="home" color="white" ></lp-icon>
+        <lp-icon is="home" color="white"></lp-icon>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, onMounted } from 'vue';
+import { ref, reactive, provide, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 
 const route = useRoute();
@@ -23,6 +23,16 @@ const state = reactive({
   styleMenus: [],
   componentMenus: []
 });
+
+// 提供全局上传配置
+const globalUploadConfig = {
+  url: 'http://api.looplan.cn/Storage.upload',
+  type: 'upload',
+  headers: {
+    Authorization: localStorage.getItem('token') || '',
+  },
+};
+provide('uploadConfig', globalUploadConfig);
 
 const onTab = ({ value }: { value: string }) => {
   console.log(value);
@@ -55,6 +65,7 @@ onMounted(() => {
   cursor: pointer;
   display: flex;
   align-items: center;
+
   .item {
     padding: 4px 8px;
   }

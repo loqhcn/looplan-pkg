@@ -11,7 +11,7 @@ import type { MessageItem, MessageUser } from '../types'
 interface MessageListProps {
     messages: MessageItem[]
     users?: MessageUser[]
-    userId?: string | number
+    userId?: string | number,
 }
 
 const props = withDefaults(defineProps<MessageListProps>(), {

@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./js/looplan-ui/looplan-ui.css" />
+    <link rel="stylesheet" href="./js/looplan-ui/index.css" />
+    <link rel="stylesheet" href="./js/looplan/looplan.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js",
+          "axios": "https://unpkg.com/axios@1.15.0/dist/esm/axios.min.js",
+          "looplan": "./js/looplan/looplan.es.js",
+          "looplan-ui": "./js/looplan-ui/looplan-ui.es.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="app">
+      <lp-button type="danger">{{ message }}</lp-button>
+
+      <div class="padding">
+        <lp-component is="LpModelRender@Table" v-bind="modelTableProps">
+        </lp-component>
+      </div>
+
+      <lp-component is="Timetool@Home" ></lp-component>
+    </div>
+
+    <script type="module">
+      import { createApp, defineComponent, ref } from "vue";
+      import * as Looplan from "looplan";
+      import LooplanUi from "looplan-ui";
+      import { useModelTable } from "./js/looplan-use/looplan-use.es.js";
+      import * as Timetool from "https://storage.loqh.cn/component/Timetool/1.0.0/Timetool.es.js";
+
+      const { modelSpaceMap, ModelSpace, useModelSpace } = Looplan;
+
+      const app = createApp({
+        setup() {
+          const message = ref("Hello vue!");
+
+          const dataSpace = useModelSpace("data");
+          const testModel = dataSpace.useModel("model/lm_test_table");
+
+          const { isReady, tableModel, modelPath, modelTableProps } =
+            useModelTable("data@model/lm_test_table", {
+              usages: "default",
+              handle: (props) => {
+                // 分类管理操作列
+                if (props.operationColumn) {
+                  props.operationColumn.width = 200;
+                }
+
+                return props;
+              },
+            });
+
+          return {
+            testModel,
+            message,
+            modelTableProps,
+          };
+        },
+      });
+
+      // TODO 设置网关
+      Looplan.setGateway({
+        url: "https://api.looplan.cn/ComponentGateway.detail",
+        name: "test",
+      });
+      setupModelSpace();
+      app.use(Looplan);
+      app.use(LooplanUi);
+
+      app.mount("#app");
+
+      function setupModelSpace() {
+        const baseURL = "https://api.looplan.cn";
+        const baseURLData = "https://data.looplan.cn";
+
+        // 主服务空间
+        const mainSpace = new ModelSpace({
+          url: `${baseURL}`,
+          provideToken: () => {
+            return localStorage.getItem("token") || "";
+          },
+        });
+        const dataSpace = new ModelSpace({
+          url: `${baseURLData}`,
+          provideToken: () => {
+            return localStorage.getItem("dataToken") || "";
+          },
+        });
+
+        const modelSpace = new ModelSpace({
+          url: `${baseURLData}`,
+          provideToken: () => {
+            return localStorage.getItem("dataToken") || "";
+          },
+        });
+
+        modelSpaceMap.set("main", mainSpace);
+        modelSpaceMap.set("data", dataSpace);
+        modelSpaceMap.set("model", modelSpace);
+      }
+    </script>
+  </body>
+</html>

@@ -19,8 +19,8 @@
                         type="text"
                         placeholder="输入包名 / 标题 / 类型 / 版本进行过滤"
                     />
-                    <lp-button @click="keyword = ''">清空</lp-button>
-                    <lp-button type="primary" @click="showCreateDialog = true">创建组件包</lp-button>
+                    <lp-button @click="keyword = ''" type="info" >x</lp-button>
+                    <lp-button type="primary" @click="showCreateDialog = true" icon="add">创建组件包</lp-button>
                 </div>
 
                 <div class="pkg-grid">
@@ -46,9 +46,18 @@
                         </div>
 
                         <div class="card-foot">
-                            <lp-button @click="onOpen(pkg)">打开文档</lp-button>
+                            <lp-button @click="onOpen(pkg)" icon="format-doc" type="info">打开文档</lp-button>
+                            <lp-button
+                                type="success"
+                                icon="upload-btn"
+                                :disabled="isBuilding(pkg.name)"
+                                @click="onUpload(pkg)"
+                            >
+                                {{ isBuilding(pkg.name) ? '处理中...' : '上传组件包' }}
+                            </lp-button>
                             <lp-button
                                 type="primary"
+                                icon="product"
                                 :disabled="isBuilding(pkg.name)"
                                 @click="onBuild(pkg)"
                             >
@@ -359,6 +368,31 @@ const onBuild = async (row: PackageConfig) => {
     } catch {
         setBuildState(row.name, false);
         appendLocalSystemLog(`服务连接失败: ${row.name}`, 'error');
+    }
+};
+
+const onUpload = async (row: PackageConfig) => {
+    if (!row.name || isBuilding(row.name)) return;
+
+    setBuildState(row.name, true);
+    try {
+        const res = await fetch(`${API_BASE}/Build.upload`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ pkg: row.name }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) {
+            setBuildState(row.name, false);
+            appendLocalSystemLog(data?.message || `提交上传失败: ${row.name}`, 'error');
+            return;
+        }
+        appendLocalSystemLog(data?.message || `已提交上传: ${row.name}`, 'system');
+    } catch {
+        setBuildState(row.name, false);
+        appendLocalSystemLog(`上传服务连接失败: ${row.name}`, 'error');
     }
 };
 

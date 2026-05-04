@@ -1,4 +1,4 @@
-import { build, InlineConfig, mergeConfig } from "vite";
+import { build, type InlineConfig, mergeConfig } from "vite";
 import { existsSync } from "fs";
 import { resolve } from "path";
 import { createBaseConfig } from "./vite.base";

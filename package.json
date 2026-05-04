@@ -43,6 +43,7 @@
     "@vitejs/plugin-vue-jsx": "^4.1.2",
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.7.0",
+    "adm-zip": "^0.5.17",
     "concurrently": "^9.2.1",
     "cross-env": "^7.0.3",
     "fs-extra": "^11.3.2",

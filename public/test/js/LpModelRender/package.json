@@ -1,0 +1,16 @@
+{
+  "name": "LpModelRender",
+  "version": "1.0.0",
+  "description": "LpModelRender component for Vue 3",
+  "main": "LpModelRender.umd.js",
+  "module": "LpModelRender.es.js",
+  "types": "types/index.d.ts",
+  "files": [
+    "*.js",
+    "*.css",
+    "types"
+  ],
+  "peerDependencies": {
+    "vue": "^3.0.0"
+  }
+}

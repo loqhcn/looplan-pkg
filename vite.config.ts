@@ -16,6 +16,15 @@ export default defineConfig({
 			},
 		},
 	},
+	css: {
+		preprocessorOptions: {
+			scss: {
+				// css预加载
+				// api: 'modern',
+				additionalData: `@use "looplan-ui/lib/var.scss" as *;` // 根据你的文件路径调整  
+			}
+		}
+	},
 	resolve: {
 		alias: {
 			'vue': 'vue/dist/vue.esm-bundler.js',

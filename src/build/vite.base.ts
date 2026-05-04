@@ -4,6 +4,10 @@ import dts from 'vite-plugin-dts'
 
 // 基础 Vite 配置
 export const baseViteConfig: UserConfig = {
+  define: {
+		// 定义全局变量, 解决打包的依赖访问了 process.env.NODE_ENV 为 undefined 的问题
+		'process.env.NODE_ENV': '"production"',
+	},
   plugins: [
     vue({
       include: [/\.vue$/],
@@ -25,10 +29,14 @@ export const baseViteConfig: UserConfig = {
   build: {
     // lib 配置将在运行时动态注入
     rollupOptions: {
-      external: ['vue'],
+      external: ['vue','looplan-ui','looplan-touch','looplan-use'],
       output: {
         globals: {
-          vue: 'Vue'
+          vue: 'Vue',
+          'looplan':'Looplan',
+          'looplan-ui': 'LooplanUi',
+          'looplan-touch': 'LooplanTouch',
+          'looplan-use': 'LooplanUse'
         }
       }
     }

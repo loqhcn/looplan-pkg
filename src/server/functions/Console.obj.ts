@@ -52,6 +52,7 @@ export default class Console {
                 return ctx.json(
                     {
                         ok: false,
+                        apiBase:apiBase,
                         message: `获取 dataToken 失败: HTTP ${resp.status}`,
                     },
                     502,

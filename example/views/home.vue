@@ -3,14 +3,11 @@
         <aside class="home-sidebar">
             <div class="sidebar-title">Looplan-pkg</div>
             <div class="sidebar-desc">
-                多组件包开发
+                vue3多组件包开发框架,快速开发与部署~
             </div>
-            <lp-menu
-                v-model="activeMenu"
-                :data="menuData"
-                :keys="menuKeys"
-                class="menu-panel"
-            ></lp-menu>
+            <div class="menu-box" style="width: 100%;flex:1;height: 0;overflow: hidden;">
+                <lp-menu v-model="activeMenu" :data="menuData" :keys="menuKeys" class="menu-panel"></lp-menu>
+            </div>
         </aside>
 
         <main class="home-main">
@@ -28,11 +25,7 @@
                     </a>
                 </div>
                 <div class="doc-frame-wrap">
-                    <iframe
-                        class="doc-frame"
-                        src="https://doc.looplan.cn/looplan-pkg"
-                        title="looplan-pkg-doc"
-                    ></iframe>
+                    <iframe class="doc-frame" src="https://doc.looplan.cn/looplan-pkg" title="looplan-pkg-doc"></iframe>
                 </div>
             </div>
         </main>
@@ -70,6 +63,8 @@ export default {
 }
 
 .home-sidebar {
+    display: flex;
+    flex-direction: column;
     height: 100vh;
     position: sticky;
     top: 0;
@@ -82,9 +77,14 @@ export default {
     font-size: 16px;
     font-weight: 600;
     color: #2a3344;
-    padding: 8px 10px 14px;
+    padding: $space 0;
+    padding-top: 0;
 }
-
+.sidebar-desc{
+    color: gray;
+    padding-bottom: $space;
+    font-size: 14px;
+}
 .menu-panel {
     border-radius: 12px;
     padding: 10px;

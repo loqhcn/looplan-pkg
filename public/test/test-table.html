@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./js/looplan-ui/looplan-ui.css" />
+    <link rel="stylesheet" href="./js/looplan-ui/index.css" />
+  </head>
+  <body>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/axios@1.15.0/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/looplan@1.3.17/lib/looplan.umd.js"></script>
+    <script src="./js/looplan-ui/looplan-ui.umd.js"></script>
+
+    <script src="./js/LpModelRender/LpModelRender.umd.js"></script>
+    <script src="./js/looplan-use/looplan-use.umd.js"></script>
+    <!-- <script src="https://storage.loqh.cn/component/LpModelRender/1.0.1/LpModelRender.umd.js"></script> -->
+    <script src="https://storage.loqh.cn/component/Timetool/1.0.0/Timetool.umd.js"></script>
+
+    <div id="app">
+      <lp-button type="danger">{{ message }}</lp-button>
+
+      <!-- <component :is="timeTool"></component> -->
+
+      <!-- <component :is="timeTool"></component> -->
+
+      <!-- <component :is="table1" v-bind="modelTableProps">
+        <template #item="{ item }"> {{ item.name }} </template>
+      </component> -->
+
+      <!-- <component :is="list1" :model="testModel">
+        <template #item="{ item }"> {{ item.name }} </template>
+      </component> -->
+
+      <!-- <lp-component
+        is="LpModelRender@Table"
+        :columns="columns"
+        model="data@model/lm_test_table"
+      ></lp-component> -->
+
+      <!-- <lp-component is="Timetool@Home" ></lp-component> -->
+    </div>
+
+    <script>
+      const { createApp, ref, reactive, defineComponent } = Vue;
+      const { modelSpaceMap, ModelSpace, useModelSpace } = Looplan;
+
+      const app = createApp({
+        setup() {
+          const message = ref("Hello vue!");
+
+          // TODO -- 表格字段
+          const columns = [
+            {
+              title: "ID",
+              name: "id",
+              width: 80,
+            },
+            {
+              title: "名称",
+              name: "name",
+              width: 150,
+            },
+          ];
+
+          // TODO -- 筛选
+          const filter = {
+            tabFilters: [
+              {
+                title: "年龄段",
+                name: "age",
+                options: [
+                  { title: "18岁以下", value: "18" }, // 这里的value可能需要后端支持范围查询，或者前端处理
+                  { title: "18-30岁", value: "30" },
+                ],
+              },
+            ],
+            searchOption: {
+              labelWidth: 120,
+            },
+            searchs: [
+              {
+                title: "名称",
+                name: "name",
+              },
+              {
+                title: "内容",
+                name: "content",
+              },
+            ],
+          };
+
+          // TODO -- 操作列
+          const operationColumn = {
+            title: "操作",
+            width: 200,
+            items: [
+              {
+                title: "编辑",
+                name: "edit",
+                type: "primary",
+                icon: "edit",
+              },
+              {
+                title: "删除",
+                name: "delete",
+                type: "danger",
+                icon: "delete",
+              },
+            ],
+          };
+
+          // TODO -- 表单配置
+          const form = {
+            title: (data) => (data ? `编辑 ${data.name}` : "新增"),
+            add: {
+              enable: true,
+              handleItems: (items) => {
+                // 新增时不需要显示ID（假设ID是自增的，或者这里只是演示过滤）
+                // 其实items里本来就没有ID，因为编辑也没配ID字段
+                // 这里演示一下如何修改字段，比如新增时不需要图片
+                return items.filter((item) => item.name !== "img");
+              },
+            },
+            items: [
+              {
+                title: "名称",
+                name: "name",
+                required: true,
+                component: "LpInput",
+                componentProps: {
+                  placeholder: "请输入名称",
+                },
+              },
+              {
+                title: "年龄",
+                name: "age",
+                component: "LpInputNumber",
+                componentProps: {
+                  placeholder: "请输入年龄",
+                },
+              },
+            ],
+          };
+
+          //   TODO -- modelTableProps
+          const modelTableProps = reactive({
+            model: "data@model/lm_test_table",
+            columns,
+            filter,
+            operationColumn,
+            form,
+            order: {
+              id: "desc",
+            },
+          });
+
+          const table1 = LpModelRender.Table;
+          console.log("table", table1);
+
+          const dataSpace = useModelSpace("data");
+          const testModel = dataSpace.useModel("model/lm_test_table");
+
+          return {
+            testModel,
+            message,
+            columns,
+            // table1:defineComponent(LpModelRender.Table),
+            // table1:defineComponent(LpModelRender.Table),
+            table1: LpModelRender.Table,
+            list1: LpModelRender.List,
+            timeTool: defineComponent(Timetool.Home),
+            modelTableProps,
+          };
+        },
+      });
+
+      // TODO 设置网关
+      Looplan.setGateway({
+        url: "http://192.168.31.101:9000/ComponentGateway.detail",
+        name: "test",
+      });
+      setupModelSpace();
+      app.use(Looplan.default);
+      app.use(LooplanUi.default);
+
+      app.mount("#app");
+
+      function setupModelSpace() {
+        const baseURL = "http://127.0.0.1:9000";
+        const baseURLData = "http://127.0.0.1:9002";
+
+        // 主服务空间
+        const mainSpace = new ModelSpace({
+          url: `${baseURL}`,
+          provideToken: () => {
+            return localStorage.getItem("token") || "";
+          },
+        });
+        const dataSpace = new ModelSpace({
+          url: `${baseURLData}`,
+          provideToken: () => {
+            return localStorage.getItem("dataToken") || "";
+          },
+        });
+
+        const modelSpace = new ModelSpace({
+          url: `${baseURLData}`,
+          provideToken: () => {
+            return localStorage.getItem("dataToken") || "";
+          },
+        });
+
+        modelSpaceMap.set("main", mainSpace);
+        modelSpaceMap.set("data", dataSpace);
+        modelSpaceMap.set("model", modelSpace);
+      }
+    </script>
+  </body>
+</html>
