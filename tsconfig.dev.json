@@ -24,6 +24,7 @@
     // "moduleDetection": "auto",  /* 控制用于检测模块格式 JS 文件的方法 */
     /* 模块配置 */
     "module": "esnext", /* 指定生成的模块代码类型 */
+    "moduleResolution": "bundler", /* 兼容 package.json 的 exports/imports (Vite 5+ / 6+ / 7+ / 8+ 需要) */
     // "rootDir": "./",  /* 指定源文件所在的根文件夹 */
     // "moduleResolution": "node10",  /* 指定 TypeScript 如何从给定的模块说明符查找文件 */
     // "baseUrl": "./",  /* 指定用于解析非相对模块名称的基目录 */
@@ -117,17 +118,19 @@
     "skipLibCheck": true /* 跳过对所有 .d.ts 文件的类型检查 */
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "src/**/*.d.ts",
-    "example/**/*.ts",
-    "example/**/*.tsx",
-    "example/**/*.vue",
-    "example/**/*.d.ts",
-    "packages/**/*",
-    "packages/**/*.vue",
-    "test/**/*.ts"
+    // "src/**/*.ts",
+    // "src/**/*.tsx",
+    // "src/**/*.vue",
+    // "src/**/*.d.ts",
+    // "example/**/*.ts",
+    // "example/**/*.tsx",
+    // "example/**/*.vue",
+    // "example/**/*.d.ts",
+    // "packages/**/*",
+    // "packages/**/*.vue",
+    // "test/**/*.ts"
+
+    "scripts/*.ts"
   ],
   "exclude": [
     "node_modules",
