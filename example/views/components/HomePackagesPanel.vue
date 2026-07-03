@@ -46,22 +46,26 @@
                         </div>
 
                         <div class="card-foot">
-                            <lp-button @click="onOpen(pkg)" icon="format-doc" type="info">打开文档</lp-button>
+                            <lp-button @click="onOpen(pkg)" 
+                            size="mini"
+                            icon="format-doc" type="info">文档</lp-button>
                             <lp-button
                                 type="success"
                                 icon="upload-btn"
+                                size="mini"
                                 :disabled="isBuilding(pkg.name)"
                                 @click="onUpload(pkg)"
                             >
-                                {{ isBuilding(pkg.name) ? '处理中...' : '上传组件包' }}
+                                {{ isBuilding(pkg.name) ? '处理中...' : '上传' }}
                             </lp-button>
                             <lp-button
                                 type="primary"
                                 icon="product"
+                                size="mini"
                                 :disabled="isBuilding(pkg.name)"
                                 @click="onBuild(pkg)"
                             >
-                                {{ isBuilding(pkg.name) ? '构建中...' : '点击打包' }}
+                                {{ isBuilding(pkg.name) ? '构建中...' : '打包' }}
                             </lp-button>
                         </div>
                     </div>
@@ -107,7 +111,7 @@
 import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
 import { packages } from '@example/lib/parsePackages';
 import { useRouter } from 'vue-router';
-import { $store } from 'looplan-doc';
+import { $store } from 'looplan-doc/app';
 import { LpLayer } from 'looplan-ui';
 import CreatePkgDialog from './CreatePkgDialog.vue';
 
@@ -487,13 +491,13 @@ onBeforeUnmount(() => {
 .pkg-grid {
     margin-top: 14px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
 }
 
 .pkg-card {
-    padding: 18px;
-    border-radius: 14px;
+    padding: 14px;
+    border-radius: 12px;
     background: #fff;
     border: 1px solid #e8eef7;
     box-shadow: 0 8px 24px rgba(15, 45, 90, 0.06);
@@ -513,7 +517,7 @@ onBeforeUnmount(() => {
 }
 
 .pkg-title {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     color: #1e2430;
     line-height: 1.35;
@@ -538,15 +542,15 @@ onBeforeUnmount(() => {
 }
 
 .card-info {
-    margin-top: 14px;
+    margin-top: 10px;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px;
+    gap: 6px;
 }
 
 .info-item {
-    padding: 10px;
-    border-radius: 10px;
+    padding: 8px;
+    border-radius: 8px;
     background: #f7f9fd;
 }
 
@@ -565,9 +569,9 @@ onBeforeUnmount(() => {
 }
 
 .card-foot {
-    margin-top: 16px;
+    margin-top: 12px;
     display: flex;
-    gap: 10px;
+    gap: 0;
     justify-content: flex-end;
 }
 
@@ -676,7 +680,7 @@ onBeforeUnmount(() => {
     }
 
     .pkg-grid {
-        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     }
 }
 </style>

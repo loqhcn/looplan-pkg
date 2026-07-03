@@ -3,6 +3,9 @@ import { ModelSpace, modelSpaceMap } from 'looplan'
 const baseURL = "http://localhost:9000";
 const baseURLData = "http://localhost:9002";
 
+// const baseURL = "https://api.looplan.cn";
+// const baseURLData = "https://data.looplan.cn";
+
 function setupModelSpace() {
     // 主服务空间
     const mainSpace = new ModelSpace({

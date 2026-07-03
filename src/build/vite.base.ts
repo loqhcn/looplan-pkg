@@ -4,6 +4,15 @@ import dts from 'vite-plugin-dts'
 
 // 基础 Vite 配置
 export const baseViteConfig: UserConfig = {
+  css: {
+		preprocessorOptions: {
+			scss: {
+				// css预加载
+				// api: 'modern',
+				additionalData: `@use "looplan-ui/lib/var.scss" as *;` // 根据你的文件路径调整  
+			}
+		}
+	},
   define: {
 		// 定义全局变量, 解决打包的依赖访问了 process.env.NODE_ENV 为 undefined 的问题
 		'process.env.NODE_ENV': '"production"',
@@ -29,7 +38,7 @@ export const baseViteConfig: UserConfig = {
   build: {
     // lib 配置将在运行时动态注入
     rollupOptions: {
-      external: ['vue','looplan-ui','looplan-touch','looplan-use'],
+      external: ['vue','looplan','looplan-ui','looplan-touch','looplan-use'],
       output: {
         globals: {
           vue: 'Vue',

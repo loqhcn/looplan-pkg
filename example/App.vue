@@ -70,4 +70,16 @@ onMounted(() => {
     padding: 4px 8px;
   }
 }
+
+
+.lp-mobile-layer {
+
+  .lp-dialog__body {
+    padding: 0;
+    container-type: size;
+    .lp-layout-em {
+      font-size: calc(100cqw / 750);
+    }
+  }
+}
 </style>

@@ -1,0 +1,317 @@
+{
+    "code": 200,
+    "msg": "success",
+    "data": {
+        "modelData": {
+            "space": "model",
+            "name": "lm_model_usage",
+            "table": "lm_model_usage",
+            "row": {
+                "name": "lm_model_usage",
+                "title": "模型用途",
+                "type": "db",
+                "img": "",
+                "database": "looplan-model",
+                "updatedAt": null
+            },
+            "items": [
+                {
+                    "title": "用户ID",
+                    "name": "userId",
+                    "type": "int",
+                    "type_usage": "",
+                    "describe": "用户ID",
+                    "default": "",
+                    "origin": ""
+                },
+                {
+                    "title": "引用名称",
+                    "name": "name",
+                    "type": "string",
+                    "type_usage": "",
+                    "describe": "",
+                    "default": "",
+                    "origin": ""
+                },
+                {
+                    "title": "标题",
+                    "name": "title",
+                    "type": "string",
+                    "type_usage": "",
+                    "describe": "",
+                    "default": "",
+                    "origin": ""
+                },
+                {
+                    "title": "模型ID",
+                    "name": "modelId",
+                    "type": "int",
+                    "type_usage": "",
+                    "describe": "",
+                    "default": "",
+                    "origin": ""
+                },
+                {
+                    "title": "用途类型",
+                    "name": "usage",
+                    "type": "string",
+                    "type_usage": "",
+                    "describe": "",
+                    "default": "",
+                    "origin": ""
+                },
+                {
+                    "title": "配置数据",
+                    "name": "data",
+                    "type": "object",
+                    "type_usage": "",
+                    "describe": "",
+                    "default": "",
+                    "origin": ""
+                },
+                {
+                    "title": "创建时间",
+                    "name": "createdAt",
+                    "type": "time",
+                    "type_usage": "",
+                    "describe": "创建时间",
+                    "default": "",
+                    "origin": ""
+                },
+                {
+                    "title": "更新时间",
+                    "name": "updatedAt",
+                    "type": "time",
+                    "type_usage": "",
+                    "describe": "更新时间",
+                    "default": "",
+                    "origin": ""
+                },
+                {
+                    "title": "删除时间",
+                    "name": "deletedAt",
+                    "type": "time",
+                    "type_usage": "",
+                    "describe": "删除时间",
+                    "default": "",
+                    "origin": ""
+                },
+                {
+                    "title": "是否默认",
+                    "name": "default",
+                    "type": "int",
+                    "type_usage": "",
+                    "describe": "1是 0否",
+                    "default": "",
+                    "origin": ""
+                }
+            ],
+            "relations": [],
+            "implementsList": [
+                {
+                    "title": "用户所属",
+                    "type": "userBelong",
+                    "config": {
+                        "field": "userId"
+                    }
+                },
+                {
+                    "title": "时间",
+                    "type": "time",
+                    "config": {
+                        "create": true,
+                        "delete": true,
+                        "update": true,
+                        "createField": "createdAt",
+                        "deleteField": "deletedAt",
+                        "updateField": "updatedAt"
+                    }
+                }
+            ]
+        },
+        "modelRow": {
+            "id": 200197,
+            "userId": "7",
+            "name": "lm_model_usage",
+            "title": "模型用途",
+            "icon": "",
+            "type": "db",
+            "pid": null,
+            "int": null,
+            "imports": null,
+            "implements": null,
+            "options": {
+                "weightConfig": {
+                    "data": 4,
+                    "name": 8,
+                    "title": 7,
+                    "usage": 5,
+                    "userId": 9,
+                    "default": 0,
+                    "modelId": 6,
+                    "createdAt": 3,
+                    "deletedAt": 1,
+                    "updatedAt": 2
+                }
+            },
+            "isPublic": null,
+            "database": "looplan-model",
+            "databaseStatus": null,
+            "upServiceStatus": null,
+            "createdAt": null,
+            "updatedAt": null,
+            "deletedAt": null
+        },
+        "user": {
+            "id": 7,
+            "title": "模型账户",
+            "userId": "7",
+            "name": "model",
+            "createdAt": null,
+            "updatedAt": null,
+            "deletedAt": null
+        },
+        "usages": [
+            {
+                "id": 3,
+                "userId": 7,
+                "name": "default",
+                "title": "用途管理",
+                "modelId": 200197,
+                "usage": "table",
+                "deletedAt": null,
+                "default": null,
+                "data": {
+                    "columns": [
+                        {
+                            "name": "id",
+                            "title": "ID",
+                            "width": "150",
+                            "minWidth": "",
+                            "component": "text"
+                        },
+                        {
+                            "name": "userId",
+                            "title": "用户ID",
+                            "width": "150",
+                            "minWidth": "",
+                            "component": "text"
+                        },
+                        {
+                            "name": "name",
+                            "title": "引用名称",
+                            "width": "150",
+                            "minWidth": "",
+                            "component": "text"
+                        },
+                        {
+                            "name": "title",
+                            "title": "标题",
+                            "width": "150",
+                            "minWidth": "",
+                            "component": "text"
+                        },
+                        {
+                            "name": "modelId",
+                            "title": "模型ID",
+                            "width": "150",
+                            "minWidth": "",
+                            "component": "text"
+                        },
+                        {
+                            "name": "usage",
+                            "title": "用途类型",
+                            "width": "150",
+                            "minWidth": "",
+                            "component": "text"
+                        },
+                        {
+                            "name": "createdAt",
+                            "title": "创建时间",
+                            "width": "150",
+                            "minWidth": "",
+                            "component": "time"
+                        },
+                        {
+                            "name": "updatedAt",
+                            "title": "更新时间",
+                            "width": "150",
+                            "minWidth": "",
+                            "component": "time"
+                        }
+                    ],
+                    "handles": [
+                        {
+                            "title": "新增",
+                            "command": "add"
+                        },
+                        {
+                            "title": "刷新",
+                            "command": "reload"
+                        },
+                        {
+                            "title": "搜索",
+                            "command": "search"
+                        }
+                    ],
+                    "rowHandles": [
+                        {
+                            "title": "编辑",
+                            "command": "edit"
+                        },
+                        {
+                            "title": "删除",
+                            "command": "delete"
+                        }
+                    ]
+                },
+                "createdAt": "2026-03-30T14:34:01.000Z",
+                "updatedAt": "2026-03-30T14:34:01.000Z"
+            },
+            {
+                "id": 4,
+                "userId": 7,
+                "name": "default",
+                "title": "用途管理表单",
+                "modelId": 200197,
+                "usage": "form",
+                "deletedAt": null,
+                "default": null,
+                "data": {
+                    "items": [
+                        {
+                            "name": "name",
+                            "title": "引用名称",
+                            "component": "text",
+                            "validates": []
+                        },
+                        {
+                            "name": "title",
+                            "title": "标题",
+                            "component": "text",
+                            "validates": []
+                        },
+                        {
+                            "name": "usage",
+                            "title": "用途类型",
+                            "component": "text",
+                            "validates": []
+                        }
+                    ],
+                    "handles": [
+                        {
+                            "title": "提交",
+                            "command": "submit"
+                        },
+                        {
+                            "title": "重置",
+                            "command": "reset"
+                        }
+                    ]
+                },
+                "createdAt": "2026-03-30T14:34:58.000Z",
+                "updatedAt": "2026-03-30T14:34:58.000Z"
+            }
+        ]
+    }
+}

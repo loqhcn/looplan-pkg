@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { setupDocRouter, setupStore, $store, useLocalDoc } from 'looplan-doc';
+import { setupDocRouter, setupStore, $store, useLocalDoc } from 'looplan-doc/app';
 import mergeAppRoute from './mergeAppRoute';
 import { pages } from './mergeAppRoute';
 const HomeView = () => import('./../views/home.vue');

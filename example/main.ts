@@ -1,10 +1,10 @@
 import { createApp,provide } from 'vue'
 import * as Vue from 'vue';
 import * as Looplan from 'looplan';
-import { setupDocRouter, setupStore, $store, useLocalDoc } from 'looplan-doc';
-import LooplanDoc from 'looplan-doc';
+import { setupDocRouter, setupStore, $store, useLocalDoc } from 'looplan-doc/app';
+import * as LooplanDoc from 'looplan-doc';
 import { setupModelSpace } from './config/api';
-
+import { setupDevClient } from './lib/looplan-client';
 
 
 import './style.css'
@@ -14,7 +14,9 @@ import { setupRouter } from '@example/router';
 import looplanUi from 'looplan-ui';
 import 'looplan-ui/lib/index.css'; // 引入全局样式
 import 'looplan-ui/lib/looplan-ui.css';
-import 'looplan-doc/lib/looplan-doc.css';
+import 'looplan-doc/looplan-doc.css';
+import 'looplan-doc/app/looplan-doc.css';
+
 
 // import currentLib from '@/index';
 
@@ -61,6 +63,9 @@ async function bootstrap() {
         // 认证
         // token:''
     });
+
+    // TODO setupDevClient
+    setupDevClient();
 
     // TODO 配置组件到Looplan
     const packageConfigs = packages.map(pkg => pkg.packageConfig);
